@@ -31,6 +31,7 @@ async function run(){
             res.send(result)
         })
 
+        // get all my task
         app.get("/myTask", async (req, res) => {
 			const query = {};
 			const cursor = taskCollection.find(query);
@@ -91,18 +92,24 @@ async function run(){
 			res.send(product);
 		});
 
+        app.delete("/addTask/:id", async (req, res) => {
+			const id = req.params.id;
+			const query = { _id: ObjectId(id) };
+			const result = await addCollection.deleteOne(query);
+			res.send(result);
+		});
        
         
 
         //get specific completed task
-        app.get('/completed/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = {
-                _id: ObjectId(id)
-            };
-            const result = await taskCollection.findOne(query);
-            res.send(result);
-        })
+        // app.get('/completed/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = {
+        //         _id: ObjectId(id)
+        //     };
+        //     const result = await taskCollection.findOne(query);
+        //     res.send(result);
+        // })
 
         // delete task
 		app.delete("/completed/:id", async (req, res) => {
